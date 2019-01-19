@@ -39,6 +39,7 @@ func (e *engine) tick() {
 		renderer.SdlRenderer.Clear()
 		renderer.SdlRenderer.SetRenderTarget(screenTexture.SdlTexture)
 		//Draw to texture
+		e.UpdateAll()
 		e.DrawAll()
 
 		//copy texture to renderer
@@ -51,6 +52,19 @@ func (e *engine) tick() {
 		frametime := sdl.GetTicks() - start
 		if frametime < 1000/fps {
 			sdl.Delay((1000 / fps) - frametime)
+		}
+	}
+}
+
+func (e *engine) UpdateAll() {
+	for _, elem := range depthmap {
+		if !elem.e.Active {
+			continue
+		}
+		err := elem.e.update()
+		if err != nil {
+			fmt.Println("error updating element", elem.e.Id, err)
+			return
 		}
 	}
 }

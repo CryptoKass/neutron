@@ -12,6 +12,11 @@ type ConstantVelocity struct {
 }
 
 func (cv *ConstantVelocity) OnDraw(rend *core.Renderer) error {
+
+	return nil
+}
+
+func (cv *ConstantVelocity) OnUpdate() error {
 	cv.Element.Position = cv.Element.Position.Add(cv.Velocity)
 	return nil
 }

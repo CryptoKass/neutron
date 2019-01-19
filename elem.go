@@ -131,3 +131,13 @@ func (elem *Element) draw(rend *core.Renderer) error {
 	}
 	return nil
 }
+
+func (elem *Element) update() error {
+	for _, comp := range elem.Components {
+		err := comp.OnUpdate()
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}

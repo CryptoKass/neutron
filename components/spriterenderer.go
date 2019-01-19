@@ -33,3 +33,7 @@ func (sr *SpriteRenderer) OnDraw(rend *core.Renderer) error {
 
 	return nil
 }
+
+func (sr *SpriteRenderer) OnUpdate() error {
+	return nil
+}

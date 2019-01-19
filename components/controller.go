@@ -25,7 +25,7 @@ func NewController(elem *neutron.Element, speed, accel, decay float32) *Controll
 	}
 }
 
-func (c *Controller) OnDraw(rend *core.Renderer) error {
+func (c *Controller) OnUpdate() error {
 
 	//get input X
 	if input.IsKeyDown(sdl.SCANCODE_A) {
@@ -55,5 +55,9 @@ func (c *Controller) OnDraw(rend *core.Renderer) error {
 
 	//log.Printf("rect at [%.1f,%.1f] moving at [%.1f,%.1f] %.1f", c.Element.Position.X, c.Element.Position.Y,
 	//	norm.X, norm.Y, norm.Magnitude())
+	return nil
+}
+
+func (c *Controller) OnDraw(rend *core.Renderer) error {
 	return nil
 }

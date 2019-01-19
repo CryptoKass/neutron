@@ -20,6 +20,10 @@ func (rect *RectRenderer) OnDraw(rend *core.Renderer) error {
 	return nil
 }
 
+func (rect *RectRenderer) OnUpdate() error {
+	return nil
+}
+
 func NewRectRenderer(elem *neutron.Element, w, h float32, col core.Color) *RectRenderer {
 
 	return &RectRenderer{

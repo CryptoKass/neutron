@@ -20,6 +20,10 @@ func (ell *EllipseRenderer) OnDraw(rend *core.Renderer) error {
 	return nil
 }
 
+func (ell *EllipseRenderer) OnUpdate() error {
+	return nil
+}
+
 func NewEllipseRenderer(elem *neutron.Element, w, h float32, col core.Color) *EllipseRenderer {
 	return &EllipseRenderer{
 		Element: elem,
