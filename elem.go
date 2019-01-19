@@ -58,6 +58,7 @@ func FindElement(id string) *Element {
 // REF:Element methods ---------------------------------------|
 // -----------------------------------------------------------|
 
+// Destroy will remove the element from the scene.
 func (elem *Element) Destroy() {
 	i := elem.GetIndex()
 	if i < 0 {
@@ -66,11 +67,20 @@ func (elem *Element) Destroy() {
 	depthmap = append(depthmap[:i], depthmap[i+1:]...)
 }
 
+// SetDepth set this elements deph. The depth is to order the
+// elements during rendering; Higher depth values will appear ontop.
 func (elem *Element) SetDepth(z float32) {
 	elem.depth = z
 	quicksortdepth(depthmap)
 }
 
+// GetDepth will return this elements depth, used to order
+// elements during rendering; Higher depth values will appear ontop.
+func (elem *Element) GetDepth() float32 {
+	return elem.depth
+}
+
+// AddComponent will add a new Component to this element.
 func (elem *Element) AddComponent(new Component) {
 	//check comp doesnt already exists
 	for _, comp := range elem.Components {
@@ -84,6 +94,8 @@ func (elem *Element) AddComponent(new Component) {
 	elem.Components = append(elem.Components, new)
 }
 
+// GetIndex will return the this elements order in the
+// depthmap.
 func (elem *Element) GetIndex() int {
 	for i, e := range depthmap {
 		if e.e.Id == elem.Id {
@@ -94,6 +106,8 @@ func (elem *Element) GetIndex() int {
 }
 
 // GetComponent Will find a the component matching the type provided.
+// The returned component should be cast to a pointer of the
+// correct component type.
 func (elem *Element) GetComponent(comp Component) Component {
 	typ := reflect.TypeOf(comp)
 	for _, c := range elem.Components {
