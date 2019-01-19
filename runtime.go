@@ -16,28 +16,18 @@ var (
 	window        *sdl.Window
 )
 
-func (e *engine) handleInput() {
-	var running = true
-	for running {
-		for event := sdl.PollEvent(); event != nil; event = sdl.PollEvent() {
-			switch event.(type) {
-			case *sdl.QuitEvent:
-				println("Quit")
-				running = false
-				window.Destroy()
-				break
-			}
-		}
-	}
-}
-
 func (e *engine) tick() {
+
 	for {
 		start := sdl.GetTicks()
+		if e.pollSdl() {
+			return
+		}
 
 		//clear the render & set new target
 		renderer.SdlRenderer.Clear()
 		renderer.SdlRenderer.SetRenderTarget(screenTexture.SdlTexture)
+
 		//Draw to texture
 		e.UpdateAll()
 		e.DrawAll()
@@ -54,6 +44,20 @@ func (e *engine) tick() {
 			sdl.Delay((1000 / fps) - frametime)
 		}
 	}
+}
+
+func (e *engine) pollSdl() bool {
+
+	for event := sdl.PollEvent(); event != nil; event = sdl.PollEvent() {
+		switch event.(type) {
+		case *sdl.QuitEvent:
+			println("Quit")
+			window.Destroy()
+			sdl.Quit()
+			return true
+		}
+	}
+	return false
 }
 
 func (e *engine) UpdateAll() {
