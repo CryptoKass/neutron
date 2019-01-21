@@ -64,7 +64,8 @@ func (e *engine) Start() {
 
 	//begin update cycle
 	console.Log(fps)
-	e.tick()
+	go e.updateloop()
+	e.drawLoop()
 
 }
 

@@ -25,7 +25,9 @@ func (ren *Renderer) DrawEllipse(x, y, w, h float32) {
 		}
 	}
 
-	ren.SdlRenderer.DrawPoints(points)
+	if len(points) > 1 {
+		ren.SdlRenderer.DrawPoints(points)
+	}
 }
 
 func (ren *Renderer) DrawSprite(tex *Texture, x, y, cx, cy, rotation float32) {

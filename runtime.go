@@ -17,7 +17,7 @@ var (
 	destroyQue []*neutronRef
 )
 
-func (e *engine) tick() {
+func (e *engine) drawLoop() {
 
 	for {
 		start := sdl.GetTicks()
@@ -30,7 +30,6 @@ func (e *engine) tick() {
 		renderer.SdlRenderer.SetRenderTarget(screenTexture.SdlTexture)
 
 		//Draw to texture
-		e.UpdateAll()
 		e.DrawAll()
 
 		//copy texture to renderer
@@ -40,7 +39,17 @@ func (e *engine) tick() {
 		//show the screen
 		renderer.SdlRenderer.Present()
 
-		//cleanup destroy que
+		frametime := sdl.GetTicks() - start
+		if frametime < 1000/fps {
+			sdl.Delay((1000 / fps) - frametime)
+		}
+	}
+}
+
+func (e *engine) updateloop() {
+	for {
+		start := sdl.GetTicks()
+		e.UpdateAll()
 		Handle(checkCollisions())
 		e.DestroyQue()
 
@@ -50,7 +59,6 @@ func (e *engine) tick() {
 		}
 	}
 }
-
 func (e *engine) pollSdl() bool {
 
 	for event := sdl.PollEvent(); event != nil; event = sdl.PollEvent() {
