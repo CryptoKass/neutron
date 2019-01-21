@@ -8,7 +8,9 @@ import (
 	"github.com/veandco/go-sdl2/ttf"
 )
 
-type engine struct{}
+type engine struct {
+	FirstDraw bool
+}
 
 // Engine is a handle for engine specific methods.
 // Notably Engine.Init and Engine.Start

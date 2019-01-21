@@ -13,8 +13,9 @@ var (
 	renderer      *core.Renderer
 	screenTexture *core.Texture
 	window        *sdl.Window
-
-	destroyQue []*neutronRef
+	nxscene       *Scene
+	physxSKIP     bool
+	destroyQue    []*neutronRef
 )
 
 func (e *engine) drawLoop() {
@@ -39,6 +40,9 @@ func (e *engine) drawLoop() {
 		//show the screen
 		renderer.SdlRenderer.Present()
 
+		//reset first draw
+		e.FirstDraw = false
+
 		frametime := sdl.GetTicks() - start
 		if frametime < 1000/fps {
 			sdl.Delay((1000 / fps) - frametime)
@@ -49,9 +53,16 @@ func (e *engine) drawLoop() {
 func (e *engine) updateloop() {
 	for {
 		start := sdl.GetTicks()
+
 		e.UpdateAll()
 		Handle(checkCollisions())
+
 		e.DestroyQue()
+
+		if nxscene != nil {
+			nxscene.load()
+			nxscene = nil
+		}
 
 		frametime := sdl.GetTicks() - start
 		if frametime < 1000/fps {

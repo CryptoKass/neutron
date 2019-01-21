@@ -7,14 +7,16 @@ import (
 )
 
 type SpriteRenderer struct {
-	Element *neutron.Element
-	Texture *core.Texture
-	Center  mathf.Vector
+	Element  *neutron.Element
+	Texture  *core.Texture
+	Center   mathf.Vector
+	Filename string
 }
 
-func NewSpriteRenderer(elem *neutron.Element, rend *core.Renderer, filename string) *SpriteRenderer {
-	tex := rend.LoadImage(filename)
+func NewSpriteRenderer(elem *neutron.Element, rend *core.Renderer, tex *core.Texture) *SpriteRenderer {
+	//tex := rend.LoadImage(filename)
 	return &SpriteRenderer{
+		//Filename: filename,
 		Element: elem,
 		Texture: tex,
 		Center:  mathf.Vector{X: tex.Width / 2, Y: tex.Height / 2},
@@ -30,7 +32,6 @@ func (sr *SpriteRenderer) OnDraw(rend *core.Renderer) error {
 	cy := sr.Center.Y //sr.Element.Position.Y + sr.Center.Y
 
 	rend.DrawSprite(sr.Texture, ox, oy, cx, cy, sr.Element.Rotation)
-
 	return nil
 }
 

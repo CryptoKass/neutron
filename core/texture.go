@@ -24,7 +24,7 @@ func (ren *Renderer) CreateTexture(w, h float32) *Texture {
 }
 
 func (ren *Renderer) LoadImage(filename string) *Texture {
-	//load iaage to surface
+	//load image to surface
 	surf, err := img.Load(filename)
 	if err != nil {
 		panic(err)

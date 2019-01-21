@@ -2,7 +2,9 @@ package neutron
 
 import "math/rand"
 
-var depthmap []neutronRef
+var (
+	depthmap []neutronRef
+)
 
 // This is an internal only reference to element, allowing
 // reference copies to be made easily.
