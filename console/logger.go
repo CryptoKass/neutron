@@ -1,6 +1,7 @@
 package console
 
 import (
+	"fmt"
 	"log"
 	"os"
 
@@ -27,6 +28,6 @@ func Log(v ...interface{}) {
 }
 
 func LogF(format string, v ...interface{}) {
-	DebugLogf(format, v...)
-	GameLogf(format, v...)
+	DebugLog(fmt.Sprintf(format, v...))
+	GameLog(fmt.Sprintf(format, v...))
 }

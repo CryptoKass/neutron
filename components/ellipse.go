@@ -24,6 +24,10 @@ func (ell *EllipseRenderer) OnUpdate() error {
 	return nil
 }
 
+func (ell *EllipseRenderer) OnCollision(other *neutron.Element) error {
+	return nil
+}
+
 func NewEllipseRenderer(elem *neutron.Element, w, h float32, col core.Color) *EllipseRenderer {
 	return &EllipseRenderer{
 		Element: elem,

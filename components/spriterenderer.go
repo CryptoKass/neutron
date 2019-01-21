@@ -26,8 +26,8 @@ func (sr *SpriteRenderer) OnDraw(rend *core.Renderer) error {
 	ox := sr.Element.Position.X - (sr.Texture.Width / 2)
 	oy := sr.Element.Position.Y - (sr.Texture.Height / 2)
 
-	cx := sr.Element.Position.X + sr.Center.X
-	cy := sr.Element.Position.Y + sr.Center.Y
+	cx := sr.Center.X //sr.Element.Position.X + sr.Center.X
+	cy := sr.Center.Y //sr.Element.Position.Y + sr.Center.Y
 
 	rend.DrawSprite(sr.Texture, ox, oy, cx, cy, sr.Element.Rotation)
 
@@ -35,5 +35,9 @@ func (sr *SpriteRenderer) OnDraw(rend *core.Renderer) error {
 }
 
 func (sr *SpriteRenderer) OnUpdate() error {
+	return nil
+}
+
+func (sr *SpriteRenderer) OnCollision(other *neutron.Element) error {
 	return nil
 }

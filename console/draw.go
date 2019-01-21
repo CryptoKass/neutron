@@ -1,8 +1,15 @@
 package console
 
-import "github.com/CryptoKass/neutron/core"
+import (
+	"github.com/CryptoKass/neutron/core"
+	"github.com/CryptoKass/neutron/input"
+)
 
 func DrawGameConole(rend *core.Renderer) {
+
+	if input.IsKeyDown(Key) {
+		GameLogOpen = !GameLogOpen
+	}
 
 	if !GameLogOpen {
 		return

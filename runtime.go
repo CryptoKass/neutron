@@ -3,7 +3,6 @@ package neutron
 import (
 	"fmt"
 
-	"github.com/CryptoKass/neutron/console"
 	"github.com/CryptoKass/neutron/core"
 	"github.com/veandco/go-sdl2/sdl"
 )
@@ -14,6 +13,8 @@ var (
 	renderer      *core.Renderer
 	screenTexture *core.Texture
 	window        *sdl.Window
+
+	destroyQue []*neutronRef
 )
 
 func (e *engine) tick() {
@@ -38,6 +39,10 @@ func (e *engine) tick() {
 
 		//show the screen
 		renderer.SdlRenderer.Present()
+
+		//cleanup destroy que
+		Handle(checkCollisions())
+		e.DestroyQue()
 
 		frametime := sdl.GetTicks() - start
 		if frametime < 1000/fps {
@@ -84,7 +89,15 @@ func (e *engine) DrawAll() {
 			return
 		}
 	}
-	console.DrawGameConole(renderer)
+}
+
+func (e *engine) DestroyQue() {
+	for _, ref := range destroyQue {
+		if ref != nil {
+			ref.e.destroy()
+		}
+	}
+	destroyQue = make([]*neutronRef, 0)
 }
 
 func (e *engine) GetRenderer() *core.Renderer {

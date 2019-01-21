@@ -15,10 +15,12 @@ import (
 // Element should be instantiated using NewElement
 type Element struct {
 	Id         string
+	Name       string
 	Position   mathf.Vector
 	Rotation   float32
 	Active     bool
 	Components []Component
+	colliders  []Collider
 	depth      float32
 }
 
@@ -59,12 +61,16 @@ func FindElement(id string) *Element {
 // -----------------------------------------------------------|
 
 // Destroy will remove the element from the scene.
-func (elem *Element) Destroy() {
+func (elem *Element) destroy() {
 	i := elem.GetIndex()
 	if i < 0 {
 		return
 	}
 	depthmap = append(depthmap[:i], depthmap[i+1:]...)
+}
+
+func (elem *Element) Destroy() {
+	destroyQue = append(destroyQue, &neutronRef{elem})
 }
 
 // SetDepth set this elements deph. The depth is to order the
@@ -92,6 +98,12 @@ func (elem *Element) AddComponent(new Component) {
 		}
 	}
 	elem.Components = append(elem.Components, new)
+}
+
+// AddCollider will add a new collider
+func (elem *Element) AddCollider(col Collider) {
+	col.Circle.Center = elem.Position
+	elem.colliders = append(elem.colliders, col)
 }
 
 // GetIndex will return the this elements order in the
@@ -133,8 +145,22 @@ func (elem *Element) draw(rend *core.Renderer) error {
 }
 
 func (elem *Element) update() error {
+	for _, col := range elem.colliders {
+		col.Circle.Center = elem.Position
+	}
+
 	for _, comp := range elem.Components {
 		err := comp.OnUpdate()
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (elem *Element) collision(other *Element) error {
+	for _, comp := range elem.Components {
+		err := comp.OnCollision(other)
 		if err != nil {
 			return err
 		}

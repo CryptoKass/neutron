@@ -24,6 +24,10 @@ func (rect *RectRenderer) OnUpdate() error {
 	return nil
 }
 
+func (rect *RectRenderer) OnCollision(other *neutron.Element) error {
+	return nil
+}
+
 func NewRectRenderer(elem *neutron.Element, w, h float32, col core.Color) *RectRenderer {
 
 	return &RectRenderer{

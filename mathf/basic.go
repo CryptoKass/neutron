@@ -16,6 +16,12 @@ func Sqr(z float32) float32 {
 	)
 }
 
+func Sqrt(z float32) float32 {
+	return float32(
+		math.Sqrt(float64(z)),
+	)
+}
+
 func Sign(z float32) float32 {
 	if z < 0 {
 		return -1
@@ -37,4 +43,18 @@ func Clamp(z, min, max float32) float32 {
 		return max
 	}
 	return z
+}
+
+func Cos(z float32) float32 {
+	zr := float64(z) * math.Pi / 180
+	return float32(
+		math.Cos(zr),
+	)
+}
+
+func Sin(z float32) float32 {
+	zr := float64(z) * math.Pi / 180
+	return float32(
+		math.Sin(zr),
+	)
 }

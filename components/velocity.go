@@ -27,3 +27,7 @@ func NewConstantVelocity(elem *neutron.Element, vec mathf.Vector) *ConstantVeloc
 		Velocity: vec,
 	}
 }
+
+func (cv *ConstantVelocity) OnCollision(other *neutron.Element) error {
+	return nil
+}

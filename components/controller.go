@@ -61,3 +61,7 @@ func (c *Controller) OnUpdate() error {
 func (c *Controller) OnDraw(rend *core.Renderer) error {
 	return nil
 }
+
+func (c *Controller) OnCollision(other *neutron.Element) error {
+	return nil
+}
